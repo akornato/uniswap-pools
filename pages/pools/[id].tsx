@@ -72,6 +72,7 @@ const PoolDetailsPage: NextPage = () => {
         loading={loading}
         dataSource={transactions.map(
           ({ key, txType, amountUSD, timestamp }) => ({
+            key,
             link: (
               <a
                 href={`https://etherscan.io/tx/${key}`}
