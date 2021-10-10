@@ -1,12 +1,27 @@
 import { useState } from "react";
 import Head from "next/head";
+import { NextRouter } from "next/router";
 import App, { AppProps, AppContext } from "next/app";
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from "@apollo/client";
 import { getDataFromTree } from "@apollo/client/react/ssr";
 import "antd/dist/antd.css";
 import { RouterProvider } from "../hooks/useRouter";
 
 const uri = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3";
+
+const Providers: React.FC<{
+  router: NextRouter;
+  apolloClient: ApolloClient<NormalizedCacheObject>;
+}> = ({ children, router, apolloClient }) => (
+  <RouterProvider router={router}>
+    <ApolloProvider client={apolloClient}>{children}</ApolloProvider>
+  </RouterProvider>
+);
 
 const AppWithApollo = ({
   Component,
@@ -27,11 +42,9 @@ const AppWithApollo = ({
           rel="stylesheet"
         />
       </Head>
-      <RouterProvider router={router}>
-        <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
-        </ApolloProvider>
-      </RouterProvider>
+      <Providers router={router} apolloClient={apolloClient}>
+        <Component {...pageProps} />
+      </Providers>
     </>
   );
 };
@@ -44,11 +57,9 @@ AppWithApollo.getInitialProps = async (appContext: AppContext) => {
   if (!process.browser) {
     const apolloClient = new ApolloClient({ uri, cache: new InMemoryCache() });
     await getDataFromTree(
-      <RouterProvider router={router}>
-        <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
-        </ApolloProvider>
-      </RouterProvider>
+      <Providers router={router} apolloClient={apolloClient}>
+        <Component {...pageProps} />
+      </Providers>
     );
     const apolloState = apolloClient.cache.extract();
     return { ...appProps, apolloState };
