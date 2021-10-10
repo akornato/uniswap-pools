@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useQuery } from "@apollo/client";
 import { Table } from "antd";
 import { GET_POOLS } from "../queries/get-pools";
@@ -12,7 +13,11 @@ export const Pools = () => {
       dataSource={data?.pools.map(
         ({ id, txCount, totalValueLockedUSD, volumeUSD, token0, token1 }) => ({
           key: id,
-          pool: `${token0.symbol}/${token1.symbol}`,
+          pool: (
+            <Link href={`/pools/${id}`}>
+              {`${token0.symbol}/${token1.symbol}`}
+            </Link>
+          ),
           txCount,
           totalValueLockedUSD,
           volumeUSD,
