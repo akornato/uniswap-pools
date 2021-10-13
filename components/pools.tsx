@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useQuery } from "@apollo/client";
 import { Table } from "antd";
-import { GET_POOLS } from "../queries/get-pools";
-import type { GetPools } from "../gql/GetPools";
+import { GET_POOLS } from "@queries/get-pools";
+import type { GetPools } from "@gql/GetPools";
 
 export const Pools = () => {
   const { loading, data } = useQuery<GetPools>(GET_POOLS);

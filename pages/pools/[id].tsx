@@ -1,13 +1,13 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import { Table, Spin } from "antd";
-import { useRouter } from "../../hooks/useRouter";
+import { useRouter } from "@hooks/useRouter";
 import { useQuery } from "@apollo/client";
-import { GET_POOL_DETAILS } from "../../queries/get-pool-details";
+import { GET_POOL_DETAILS } from "@queries/get-pool-details";
 import type {
   GetPoolDetails,
   GetPoolDetailsVariables,
-} from "../../gql/GetPoolDetails";
+} from "@gql/GetPoolDetails";
 
 const PoolDetailsPage: NextPage = () => {
   const {

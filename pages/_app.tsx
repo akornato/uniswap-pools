@@ -10,7 +10,7 @@ import {
 } from "@apollo/client";
 import { getDataFromTree } from "@apollo/client/react/ssr";
 import "antd/dist/antd.css";
-import { RouterProvider } from "../hooks/useRouter";
+import { RouterProvider } from "@hooks/useRouter";
 
 const uri = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3";
 
