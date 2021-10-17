@@ -51,10 +51,10 @@ const AppWithApollo = ({
 
 AppWithApollo.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext);
-  const { pageProps } = appProps;
-  const { Component, router } = appContext;
 
   if (!process.browser) {
+    const { pageProps } = appProps;
+    const { Component, router } = appContext;
     const apolloClient = new ApolloClient({ uri, cache: new InMemoryCache() });
     await getDataFromTree(
       <Providers router={router} apolloClient={apolloClient}>
